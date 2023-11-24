@@ -1,0 +1,67 @@
+[
+  {
+    "name": "Samsung Galaxy S22",
+    "description": "The Samsung Galaxy S22 is a flagship smartphone with a stunning display, powerful camera system, and enhanced performance.",
+    "category": "Electronics",
+    "price": 1099,
+    "product_owner": "Emma",
+    "image_url": "https://example.com/galaxy-s22.jpg",
+
+    "upVotes": 80,
+    "downVotes": 3,
+    "created_at": "2023-12-04T17:45:00Z",
+    "tags": ["smartphone", "Samsung", "technology"]
+  },
+  {
+    "name": "Dell XPS 13 2023",
+    "description": "Experience top-tier performance with the Dell XPS 13 2023 laptop, featuring a high-resolution display, powerful processors, and a sleek design.",
+    "category": "Electronics",
+    "price": 1799,
+    "product_owner": "Olivia",
+    "image_url": "https://example.com/xps-13-2023.jpg",
+
+    "upVotes": 95,
+    "downVotes": 7,
+    "created_at": "2023-12-09T14:20:00Z",
+    "tags": ["laptop", "Dell", "technology"]
+  },
+  {
+    "name": "Bose QuietComfort 45",
+    "description": "Immerse yourself in unparalleled audio quality with the Bose QuietComfort 45 headphones, featuring advanced noise cancellation and premium comfort.",
+    "category": "Electronics",
+    "price": 349,
+    "product_owner": "Alice",
+    "image_url": "https://example.com/quietcomfort-45.jpg",
+
+    "upVotes": 90,
+    "downVotes": 8,
+    "created_at": "2023-12-14T16:30:00Z",
+    "tags": ["headphones", "Bose", "audio"]
+  },
+  {
+    "name": "Canon EOS R5",
+    "description": "Capture breathtaking moments with the Canon EOS R5, a mirrorless camera with high-resolution imaging capabilities and advanced autofocus technology.",
+    "category": "Electronics",
+    "price": 3799,
+    "product_owner": "Andrew",
+    "image_url": "https://example.com/eos-r5.jpg",
+
+    "upVotes": 110,
+    "downVotes": 4,
+    "created_at": "2023-12-18T20:10:00Z",
+    "tags": ["camera", "Canon", "photography"]
+  },
+  {
+    "name": "Fitbit Charge 5",
+    "description": "Track your fitness goals with the Fitbit Charge 5, a feature-rich fitness tracker with advanced health monitoring, GPS, and a vibrant AMOLED display.",
+    "category": "Wearables",
+    "price": 179,
+    "product_owner": "Sophie",
+    "image_url": "https://example.com/fitbit-charge-5.jpg",
+
+    "upVotes": 75,
+    "downVotes": 6,
+    "created_at": "2023-12-24T11:05:00Z",
+    "tags": ["fitness tracker", "Fitbit", "wearables"]
+  }
+]
