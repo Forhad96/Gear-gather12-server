@@ -1,0 +1,17 @@
+POST http://localhost:5000/users
+content-type: application/json
+
+[
+    {
+    "name": "forhad",
+    "email": "forhad@gmail.com",
+    "role":"admin"
+
+},
+{
+    "name":"kanna",
+    "email":"kanna@kati.com",
+    "role":"user"
+}
+
+]

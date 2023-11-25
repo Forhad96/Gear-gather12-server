@@ -2,7 +2,9 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const express = require("express");
 const { LOCAL_CLIENT, CLIENT } = require("../config/default");
+
 const applyMiddleware = (app) => {
+// console.log({LOCAL_CLIENT,CLIENT});
   // middleware
   app.use(
     cors({
