@@ -14,6 +14,19 @@ try {
 }
 });
 
+// get single product
+router.get('/products/:email',async(req,res,next)=>{
+  try {
+    const query = { product_owner: req.params.email };
+    const result = await products.find(query)
+    res.send(result)
+    console.log(query);
+  } catch (error) {
+    next(error)
+    
+  }
+})
+
 //post method
 router.post('/products',async(req,res,next)=>{
   try {
