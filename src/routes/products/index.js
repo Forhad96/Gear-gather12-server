@@ -15,17 +15,16 @@ router.get("/products", async (req, res, next) => {
 // get single product by id
 router.get("/products/:id", async (req, res, next) => {
   try {
-    const query = {_id: req.params.id}
-    const result = await products.findById(query)
-    res.send(result)
+    const query = { _id: req.params.id };
+    const result = await products.findById(query);
+    res.send(result);
   } catch (error) {
     console.log(error);
-    
   }
 });
 
 // get user all products by email
-router.get("/products/:email", async (req, res, next) => {
+router.get("/userProducts/:email", async (req, res, next) => {
   try {
     const query = { product_owner: req.params.email };
     const result = await products.find(query);
