@@ -47,4 +47,18 @@ router.post("/products", async (req, res, next) => {
   }
 });
 
+// patch method 
+router.patch('/products/:id',async(req,res,next)=>{
+  try {
+    const updateDoc = req.body;
+    const query = {_id: req.params.id}
+
+    const result =await products.findByIdAndUpdate(query,updateDoc)
+    res.send(result)
+  } catch (error) {
+    next(error)
+    
+  }
+})
+
 module.exports = router;
