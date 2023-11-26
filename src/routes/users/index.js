@@ -25,6 +25,35 @@ try {
 }
 });
 
+// update role
+router.put('/users/:id',async(req,res,next)=>{
+  try {
+    const filter = { _id: req.params.id };
+    const role = req.body.role;
+    const newRole = {
+      $set: {
+        role: role,
+      },
+    };
+
+    // Validate request data
+    if (!role) {
+      return res.status(400).json({ error: "Role is required" });
+    }
+
+    const result = await users.updateOne(filter, newRole);
+    // Check if a document was modified
+    if (result.nModified === 0) {
+      return res
+        .status(404)
+        .json({ error: "User not found or role not modified" });
+    }
+
+    return res.json({ message: "User role updated successfully", result });
+  } catch (error) {
+  next(error)
+}
+})
 
 
 module.exports = router;
