@@ -1,11 +1,13 @@
+const verifyAdmin = require("../../middleware/verifyAdmin");
 const verifyToken = require("../../middleware/verifyToken");
 const users = require("../../models/users");
 // const
 const router = require("express").Router();
 
 // get method
-router.get("/users", verifyToken, async (req, res, next) => {
+router.get("/users", verifyToken,verifyAdmin, async (req, res, next) => {
   try {
+    console.log(req.user);
     const result = await users.find();
     res.send(result);
   } catch (error) {
