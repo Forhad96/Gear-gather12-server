@@ -41,6 +41,13 @@ const productsSchema = new Schema({
     type: [String],
     required: true,
   },
+  externalLinks: {
+    type: String,
+  },
+  featured:{
+    type:Boolean,
+    default:false
+  }
 });
 
 const products = model("products", productsSchema);
