@@ -1,4 +1,4 @@
-const { Schema,model } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const productsSchema = new Schema({
   name: {
@@ -44,16 +44,19 @@ const productsSchema = new Schema({
   externalLinks: {
     type: String,
   },
-  featured:{
-    type:Boolean,
-    default:false
-  }
+  featured: {
+    type: Boolean,
+    default: false,
+  },
+  status: {
+    type: String,
+    default: "pending",
+  },
 });
 
 const products = model("products", productsSchema);
 
-
-module.exports= products
+module.exports = products;
 // {
 //   "id": 1,
 //   "name": "Google Pixel 7 Pro",
