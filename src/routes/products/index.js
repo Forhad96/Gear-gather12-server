@@ -16,8 +16,13 @@ router.get("/products", async (req, res, next) => {
 // get all verified product
 router.get("/verifiedProducts", async (req, res, next) => {
   try {
-    const query = { status: "accepted" };
+    const searchValue = req?.query?.searchValue;
+    let query = { status: "accepted" };
+ if (searchValue && searchValue.trim()) {
+   query.tags = { $in: [new RegExp(searchValue, "i")] };
+ }
     const result = await products.find(query);
+
     res.send(result);
   } catch (error) {
     next(error);
