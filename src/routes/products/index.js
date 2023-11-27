@@ -2,10 +2,22 @@ const products = require("../../models/Products");
 
 const router = require("express").Router();
 
+// get method
 router.get("/products", async (req, res, next) => {
   try {
     const result = await products.find();
     console.log(result);
+    res.send(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// get all verified product
+router.get("/verifiedProducts", async (req, res, next) => {
+  try {
+    const query = { status: "accepted" };
+    const result = await products.find(query);
     res.send(result);
   } catch (error) {
     next(error);
@@ -47,18 +59,28 @@ router.post("/products", async (req, res, next) => {
   }
 });
 
-// patch method 
-router.patch('/products/:id',async(req,res,next)=>{
+// patch method
+router.patch("/products/:id", async (req, res, next) => {
   try {
     const updateDoc = req.body;
-    const query = {_id: req.params.id}
+    const query = { _id: req.params.id };
 
-    const result =await products.findByIdAndUpdate(query,updateDoc)
-    res.send(result)
+    const result = await products.findByIdAndUpdate(query, updateDoc);
+    res.send({ success: true });
   } catch (error) {
-    next(error)
-    
+    next(error);
   }
-})
+});
+
+// delete method
+router.delete("/products/:id", async (req, res, next) => {
+  try {
+    const query = { _id: req.params.id };
+    const result = await products.deleteOne(query);
+    res.send(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

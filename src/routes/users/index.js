@@ -5,11 +5,33 @@ const users = require("../../models/users");
 const router = require("express").Router();
 
 // get method
-router.get("/users", verifyToken,verifyAdmin, async (req, res, next) => {
+router.get("/users",verifyToken,verifyAdmin, async (req, res, next) => {
   try {
     console.log(req.user);
     const result = await users.find();
     res.send(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// check user role
+router.get("/users/checkRole/:email",verifyToken, async (req, res, next) => {
+  try {
+    const email = req.params.email;
+    
+    if(req.user.email !== email){
+      return res.status(403).send({message:"unauthorized access"})
+    }
+    const query = { email: email };
+
+    const user = await users.findOne(query);
+    let role = ''
+    if(user){
+      role = user?.role
+    }
+    res.send({role})
+    console.log(role);
   } catch (error) {
     next(error);
   }
