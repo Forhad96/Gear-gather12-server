@@ -1,3 +1,4 @@
+const verifyToken = require("../../middleware/verifyToken");
 const products = require("../../models/Products");
 
 const router = require("express").Router();
@@ -6,7 +7,6 @@ const router = require("express").Router();
 router.get("/products", async (req, res, next) => {
   try {
     const result = await products.find();
-    console.log(result);
     res.send(result);
   } catch (error) {
     next(error);
@@ -18,9 +18,9 @@ router.get("/verifiedProducts", async (req, res, next) => {
   try {
     const searchValue = req?.query?.searchValue;
     let query = { status: "accepted" };
- if (searchValue && searchValue.trim()) {
-   query.tags = { $in: [new RegExp(searchValue, "i")] };
- }
+    if (searchValue && searchValue.trim()) {
+      query.tags = { $in: [new RegExp(searchValue, "i")] };
+    }
     const result = await products.find(query);
 
     res.send(result);
@@ -30,9 +30,10 @@ router.get("/verifiedProducts", async (req, res, next) => {
 });
 
 // get single product by id
-router.get("/products/:id", async (req, res, next) => {
+router.get("/products/:id",verifyToken, async (req, res, next) => {
   try {
     const query = { _id: req.params.id };
+    console.log(req.user);
     const result = await products.findById(query);
     res.send(result);
   } catch (error) {
@@ -46,7 +47,6 @@ router.get("/userProducts/:email", async (req, res, next) => {
     const query = { product_owner: req.params.email };
     const result = await products.find(query);
     res.send(result);
-    console.log(query);
   } catch (error) {
     next(error);
   }
@@ -56,9 +56,67 @@ router.get("/userProducts/:email", async (req, res, next) => {
 router.post("/products", async (req, res, next) => {
   try {
     const newProduct = req.body;
-    console.log(newProduct);
     const result = await products.insertMany(newProduct);
     res.send(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+// post method to for vote
+router.post("/votes/:productId/:userId",  async (req, res, next) => {
+  try {
+    const {productId,userId} = req.params
+    const action = req.query.action
+const product = await products.findById(productId);
+
+if (!product) {
+  return res.status(404).json({ error: "Product not found" });
+}
+
+const existingVote = product.votedUsers.find(
+  (vote) => vote.user && vote.user.toString() === userId
+);
+// const existingVoteIndex = product.votedUsers.findIndex(
+//   (vote) => vote.user && vote.user.toString() === userId
+// );
+if (existingVote) {
+  // If the user has already voted, remove their vote
+  product.votedUsers.pull(existingVote);
+  if (existingVote.action === action) {
+    // If the user is toggling the same vote action, decrement the corresponding count
+    if (action === "upvote") {
+      product.upVotes -= 1;
+    } else if (action === "downvote") {
+      product.downVotes -= 1;
+    }
+  } else {
+    // If the user is changing the vote action, update the counts accordingly
+    if (action === "upvote") {
+      product.upVotes += 1;
+      product.downVotes -= 1;
+    } else if (action === "downvote") {
+      product.downVotes += 1;
+      product.upVotes -= 1;
+    }
+    // Add the new vote
+    product.votedUsers.push({user: userId, action });
+  }
+} else {
+  // If the user hasn't voted yet, add their vote
+  if (action === "upvote") {
+    product.upVotes += 1;
+  } else if (action === "downvote") {
+    product.downVotes += 1;
+  }
+  product.votedUsers.push({user: userId, action });
+}
+
+// Save the updated product
+await product.save();
+
+res.json({ success: true });
+
   } catch (error) {
     next(error);
   }

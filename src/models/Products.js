@@ -33,6 +33,18 @@ const productsSchema = new Schema({
     type: Number,
     default: 0,
   },
+  votedUsers: [
+    {
+      user: {
+        type: Schema.Types.ObjectId,
+        ref: "users",
+      },
+      action: {
+        type: String,
+        enum: ["upvote", "downvote"],
+      },
+    },
+  ],
   created_at: {
     type: Date,
     default: Date.now,
