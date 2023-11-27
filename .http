@@ -1,8 +1,8 @@
-# POST  http://localhost:5000/votes/656205e71ddfd55783535b7b
+GET   http://localhost:5000/allReportedProducts
 # content-type: application/json
-# [{"vote":true}]
-POST http://localhost:5000/votes/6560a07db7360b757b8db847/?action=upvote HTTP/1.1
-content-type: application/json
+# # [{"vote":true}]
+# POST http://localhost:5000/votes/6560a07db7360b757b8db847/?action=upvote HTTP/1.1
+# content-type: application/json
 
 
 # 6560a07db7360b757b8db847 6563aeb2b668812e9514b61b upvote
