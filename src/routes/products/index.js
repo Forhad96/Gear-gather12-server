@@ -30,7 +30,7 @@ router.get("/verifiedProducts", async (req, res, next) => {
 });
 
 // get single product by id
-router.get("/products/:id",verifyToken, async (req, res, next) => {
+router.get("/products/:id", verifyToken, async (req, res, next) => {
   try {
     const query = { _id: req.params.id };
     console.log(req.user);
@@ -64,59 +64,56 @@ router.post("/products", async (req, res, next) => {
 });
 
 // post method to for vote
-router.post("/votes/:productId/:userId",  async (req, res, next) => {
+router.post("/votes/:productId/:userId", async (req, res, next) => {
   try {
-    const {productId,userId} = req.params
-    const action = req.query.action
-const product = await products.findById(productId);
+    const { productId, userId } = req.params;
+    const action = req.query.action;
+    const product = await products.findById(productId);
 
-if (!product) {
-  return res.status(404).json({ error: "Product not found" });
-}
-
-const existingVote = product.votedUsers.find(
-  (vote) => vote.user && vote.user.toString() === userId
-);
-// const existingVoteIndex = product.votedUsers.findIndex(
-//   (vote) => vote.user && vote.user.toString() === userId
-// );
-if (existingVote) {
-  // If the user has already voted, remove their vote
-  product.votedUsers.pull(existingVote);
-  if (existingVote.action === action) {
-    // If the user is toggling the same vote action, decrement the corresponding count
-    if (action === "upvote") {
-      product.upVotes -= 1;
-    } else if (action === "downvote") {
-      product.downVotes -= 1;
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
     }
-  } else {
-    // If the user is changing the vote action, update the counts accordingly
-    if (action === "upvote") {
-      product.upVotes += 1;
-      product.downVotes -= 1;
-    } else if (action === "downvote") {
-      product.downVotes += 1;
-      product.upVotes -= 1;
+
+    const existingVote = product.votedUsers.find(
+      (vote) => vote.user && vote.user.toString() === userId
+    );
+
+    if (existingVote) {
+      // If the user has already voted, remove their vote
+      product.votedUsers.pull(existingVote);
+      if (existingVote.action === action) {
+        // If the user is toggling the same vote action, decrement the corresponding count
+        if (action === "upvote") {
+          product.upVotes -= 1;
+        } else if (action === "downvote") {
+          product.downVotes -= 1;
+        }
+      } else {
+        // If the user is changing the vote action, update the counts accordingly
+        if (action === "upvote") {
+          product.upVotes += 1;
+          product.downVotes -= 1;
+        } else if (action === "downvote") {
+          product.downVotes += 1;
+          product.upVotes -= 1;
+        }
+        // Add the new vote
+        product.votedUsers.push({ user: userId, action });
+      }
+    } else {
+      // If the user hasn't voted yet, add their vote
+      if (action === "upvote") {
+        product.upVotes += 1;
+      } else if (action === "downvote") {
+        product.downVotes += 1;
+      }
+      product.votedUsers.push({ user: userId, action });
     }
-    // Add the new vote
-    product.votedUsers.push({user: userId, action });
-  }
-} else {
-  // If the user hasn't voted yet, add their vote
-  if (action === "upvote") {
-    product.upVotes += 1;
-  } else if (action === "downvote") {
-    product.downVotes += 1;
-  }
-  product.votedUsers.push({user: userId, action });
-}
 
-// Save the updated product
-await product.save();
+    // Save the updated product
+    await product.save();
 
-res.json({ success: true });
-
+    res.json({ success: true });
   } catch (error) {
     next(error);
   }

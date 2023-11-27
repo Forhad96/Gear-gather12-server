@@ -11,12 +11,14 @@ applyMiddleware(app);
 const authentication = require("./routes/authentication/index");
 const productsRoutes = require("./routes/products/index");
 const usersRoutes = require("./routes/users");
+const reportRoutes = require('./routes/report/index')
 
 //routes
 
 app.use(authentication);
 app.use(productsRoutes);
 app.use(usersRoutes);
+app.use(reportRoutes)
 
 app.get("/health", (req, res) => {
   res.send("Gear-gather server running with mongoose");
