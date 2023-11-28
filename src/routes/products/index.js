@@ -1,3 +1,4 @@
+const verifyAdmin = require("../../middleware/verifyAdmin");
 const verifyToken = require("../../middleware/verifyToken");
 const products = require("../../models/Products");
 
