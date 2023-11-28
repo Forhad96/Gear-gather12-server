@@ -3,7 +3,19 @@ const Report = require("../../models/Report");
 
 const router = require("express").Router();
 
-// get all reported product
+
+//get all reports
+router.get("/reports/:reportedProductId",async(req,res,next)=>{
+  try {
+    const query = {productId:req.params.reportedProductId}
+    const result = await Report.find(query)
+    res.send(result)
+  } catch (error) {
+    next(error)
+  }
+})
+
+// get all reported products
 router.get("/allReportedProducts", async (req, res, next) => {
   try {
     //get all report
@@ -14,13 +26,12 @@ router.get("/allReportedProducts", async (req, res, next) => {
     // get all reported product
 
     // console.log(reportedId);
-    // return
 
     const reportedProducts = await products.find({
-      _id: { $in:  reportedId },
+      _id: { $in: reportedId },
     });
     console.log(reportedProducts);
-    return;
+    res.send(reportedProducts);
   } catch (error) {
     console.log(error);
   }
