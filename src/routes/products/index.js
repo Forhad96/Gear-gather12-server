@@ -17,13 +17,23 @@ router.get("/products", async (req, res, next) => {
 // get all verified product
 router.get("/verifiedProducts", async (req, res, next) => {
   try {
+    const sort = req.query.sort;
     const searchValue = req?.query?.searchValue;
     let query = { status: "accepted" };
+    //check search value
     if (searchValue && searchValue.trim()) {
       query.tags = { $in: [new RegExp(searchValue, "i")] };
     }
-    const result = await products.find(query);
 
+    let result;
+
+    if (sort === "asc") {
+      result = await products.find(query).sort({ upVotes: 1 }); // Sort in ascending order
+    } else if (sort === "desc") {
+      result = await products.find(query).sort({ upVotes: -1 }); // Sort in descending order
+    } else {
+      result = await products.find(query); // No sorting
+    }
     res.send(result);
   } catch (error) {
     next(error);
