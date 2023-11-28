@@ -40,10 +40,11 @@ app.use((err, req, res, next) => {
 // Error handling middleware
 app.use(errorHandle);
 
-const main = async () => {
-  await connectDB();
-  app.listen(port, () => {
-    console.log(`Gear-gather-server running with mongoose on port:- ${port}`);
-  });
-};
-main();
+// const main = async () => {
+//   await connectDB();
+//   app.listen(port, () => {
+//     console.log(`Gear-gather-server running with mongoose on port:- ${port}`);
+//   });
+// };
+// main();
+module.exports = app
