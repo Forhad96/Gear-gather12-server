@@ -5,7 +5,17 @@ const router = require("express").Router();
 
 
 
-
+// get product specific review 
+router.get('/reviews/:productId',async(req,res,next)=>{
+    try {
+       const query = {productId: req.params.productId} 
+       const result = await Review.find(query)
+       res.send(result)
+    } catch (error) {
+        next(error)
+        
+    }
+})
 
 
 
