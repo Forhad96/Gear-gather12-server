@@ -12,15 +12,17 @@ const authentication = require("./routes/authentication/index");
 const productsRoutes = require("./routes/products/index");
 const usersRoutes = require("./routes/users");
 const reportRoutes = require('./routes/report/index')
-const featuredProductsRoute = require('./routes/featuredProducts')
-
+const featuredProductsRoutes = require('./routes/featuredProducts')
+const reviewsRoutes = require('./routes/Review/index')
 //routes
 
 app.use(authentication);
 app.use(productsRoutes);
 app.use(usersRoutes);
 app.use(reportRoutes)
-app.use(featuredProductsRoute)
+app.use(featuredProductsRoutes)
+app.use(reviewsRoutes)
+
 
 app.get("/health", (req, res) => {
   res.send("Gear-gather server running with mongoose");

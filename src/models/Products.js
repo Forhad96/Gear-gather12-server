@@ -64,6 +64,10 @@ const productsSchema = new Schema({
     type: String,
     default: "pending",
   },
+  rating: {
+    type: Number,
+    ref: "Review",
+  },
 });
 
 const products = model("products", productsSchema);

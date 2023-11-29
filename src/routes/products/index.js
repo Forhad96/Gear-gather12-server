@@ -7,6 +7,7 @@ const router = require("express").Router();
 // get method
 router.get("/products", async (req, res, next) => {
   try {
+
     const result = await products.find();
     res.send(result);
   } catch (error) {
