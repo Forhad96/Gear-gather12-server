@@ -28,7 +28,7 @@ app.use(paymentRoutes)
 app.use(couponRoutes)
 
 
-app.get("/health", (req, res) => {
+app.get("/", (req, res) => {
   res.send("Gear-gather server running with mongoose");
 });
 
