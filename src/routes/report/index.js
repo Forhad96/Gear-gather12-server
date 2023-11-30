@@ -41,12 +41,24 @@ router.get("/allReportedProducts", async (req, res, next) => {
 router.post("/report", async (req, res, next) => {
   try {
     const newReport = req.body;
-    console.log(newReport);
     const result = await Report.insertMany(newReport);
     res.send({ success: true });
   } catch (error) {
     next(error);
   }
 });
+
+
+// Delete method 
+router.delete('/allReportedProduct/:productId',async(req,res,next)=>{
+  try {
+    const query ={_id: req.params.productId}
+    const result = await products.deleteOne(query)
+    res.send(result)
+  } catch (error) {
+    next(error)
+    
+  }
+})
 
 module.exports = router;

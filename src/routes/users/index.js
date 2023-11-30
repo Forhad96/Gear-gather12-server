@@ -30,7 +30,12 @@ router.get("/users/checkRole/:email",verifyToken, async (req, res, next) => {
     if(user){
       role = user?.role
     }
-    res.send({role,userId:user._id,email:user.email})
+    res.send({
+      role,
+      userId: user._id,
+      email: user.email,
+      subscription: user?.subscription,
+    });
   } catch (error) {
     next(error);
   }

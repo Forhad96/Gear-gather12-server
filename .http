@@ -11,20 +11,20 @@
 #     "time": "Wed, 21 Oct 2015 18:27:50 GMT"
 # }
 
-POST http://localhost:5000/reviews
-content-type: application/json
+DELETE  http://localhost:5000/allReportedProduct/kdfkdsl
+# content-type: application/json
 
-[
-    {
-    "name": "forhad",
-    "email": "forhad@gmail.com",
-    "role":"admin"
+# [
+#     {
+#     "name": "forhad",
+#     "email": "forhad@gmail.com",
+#     "role":"admin"
 
-},
-{
-    "name":"kanna",
-    "email":"kanna@kati.com",
-    "role":"user"
-}
+# },
+# {
+#     "name":"kanna",
+#     "email":"kanna@kati.com",
+#     "role":"user"
+# }
 
-]
+# ]
