@@ -15,6 +15,7 @@ const reportRoutes = require('./routes/report/index')
 const featuredProductsRoutes = require('./routes/featuredProducts')
 const reviewsRoutes = require('./routes/Review/index')
 const paymentRoutes = require('./routes/payment/index')
+const couponRoutes = require('./routes/coupon/index')
 //routes
 
 app.use(authentication);
@@ -24,6 +25,7 @@ app.use(reportRoutes)
 app.use(featuredProductsRoutes)
 app.use(reviewsRoutes)
 app.use(paymentRoutes)
+app.use(couponRoutes)
 
 
 app.get("/health", (req, res) => {
