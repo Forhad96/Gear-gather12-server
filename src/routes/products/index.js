@@ -1,13 +1,13 @@
 const verifyAdmin = require("../../middleware/verifyAdmin");
 const verifyToken = require("../../middleware/verifyToken");
 const products = require("../../models/Products");
+const users = require("../../models/users");
 
 const router = require("express").Router();
 
 // get method
 router.get("/products", async (req, res, next) => {
   try {
-
     const result = await products.find();
     res.send(result);
   } catch (error) {
@@ -29,9 +29,9 @@ router.get("/verifiedProducts", async (req, res, next) => {
     let result;
 
     if (sort === "asc") {
-      result = await products.find(query).sort({ upVotes: 1 }); // Sort in ascending order
+      result = await products.find(query).sort({ upVotes: 1 }).limit(6); // Sort in ascending order
     } else if (sort === "desc") {
-      result = await products.find(query).sort({ upVotes: -1 }); // Sort in descending order
+      result = await products.find(query).sort({ upVotes: -1 }).limit(6); // Sort in descending order
     } else {
       result = await products.find(query); // No sorting
     }
@@ -64,10 +64,26 @@ router.get("/userProducts/:email", async (req, res, next) => {
   }
 });
 
+// getUser product count
+router.get("/premium_info", verifyToken, async (req, res, next) => {
+  try {
+    const email = req.user.email;
+
+    const query = { product_owner: email };
+    const count = await products.countDocuments(query);
+    const { subscription } = await users.findOne({ email: email });
+    res.json({ count, subscription });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+});
+
 //post method
 router.post("/products", async (req, res, next) => {
   try {
     const newProduct = req.body;
+    console.log(newProduct);
     const result = await products.insertMany(newProduct);
     res.send(result);
   } catch (error) {

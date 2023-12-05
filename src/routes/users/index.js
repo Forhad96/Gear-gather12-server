@@ -129,7 +129,7 @@ router.put("/users/:id", async (req, res, next) => {
       }
     }
 
-    return res.json({ message: "User updated successfully" });
+    return res.json({success:true, message: "User updated successfully" });
   } catch (error) {
     next(error);
   }

@@ -1,3 +1,4 @@
+const verifyToken = require("../../middleware/verifyToken");
 const Review = require("../../models/Review");
 
 const router = require("express").Router();
@@ -17,7 +18,16 @@ router.get('/reviews/:productId',async(req,res,next)=>{
     }
 })
 
-
+router.get('/reviewCount/:productId',verifyToken,async(req,res,next)=>{
+    try {
+        const query = {productId: req.params.productId}
+        const reviewCount = await Review.countDocuments(query)
+        res.json(reviewCount)
+    } catch (error) {
+        next(error)
+        
+    }
+})
 
 // post method
 router.post('/reviews',async(req,res,next)=>{

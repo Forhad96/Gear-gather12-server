@@ -5,5 +5,5 @@
    CLIENT: process.env.CLIENT,
  };
 
- console.log(config);
+
  module.exports = Object.freeze(config);

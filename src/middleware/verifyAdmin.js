@@ -6,7 +6,6 @@ const verifyAdmin = async (req, res, next) => {
   try {
     // find the user by email
     const user = await users.findOne({ email });
-
     // Check if the user exists and has the role of admin
     const isAdmin = user?.role === "admin";
     // const isModerator = user?.role === "moderator";
