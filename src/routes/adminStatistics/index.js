@@ -20,7 +20,8 @@ router.get("/statistics", async (req, res, next) => {
     statistics.totalReviews = await Review.estimatedDocumentCount();
     statistics.totalUsers = await users.estimatedDocumentCount();
     statistics.totalCoupon = await Coupon.estimatedDocumentCount();
-
+    
+    
     res.send(statistics);
   } catch (error) {
     next(error);

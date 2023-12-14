@@ -17,6 +17,7 @@ const reviewsRoutes = require('./routes/Review/index')
 const paymentRoutes = require('./routes/payment/index')
 const couponRoutes = require('./routes/coupon/index')
 const statisticsRoutes = require('./routes/adminStatistics/index')
+const pageCountRoutes = require('./routes/pageCount/index.js')
 //routes
 
 app.use(authentication);
@@ -28,6 +29,7 @@ app.use(reviewsRoutes)
 app.use(paymentRoutes)
 app.use(couponRoutes)
 app.use(statisticsRoutes)
+app.use(pageCountRoutes)
 
 
 app.get("/", (req, res) => {
