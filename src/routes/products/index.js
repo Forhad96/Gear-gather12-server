@@ -8,7 +8,12 @@ const router = require("express").Router();
 // get method
 router.get("/products", async (req, res, next) => {
   try {
-    const result = await products.find();
+    const page = parseInt(req.query.page) || 0;
+    const size = parseInt(req.query.size) || 10;
+    const result = await products
+      .find()
+      .skip(page * size)
+      .limit(size);
     res.send(result);
   } catch (error) {
     next(error);
@@ -20,6 +25,11 @@ router.get("/verifiedProducts", async (req, res, next) => {
   try {
     const sort = req.query.sort;
     const searchValue = req?.query?.searchValue;
+    const page = parseInt(req.query.page) || 0;
+    const size = parseInt(req.query.size) || 10;
+    console.log(page, size);
+
+
     let query = { status: "accepted" };
     //check search value
     if (searchValue && searchValue.trim()) {
@@ -32,8 +42,12 @@ router.get("/verifiedProducts", async (req, res, next) => {
       result = await products.find(query).sort({ upVotes: 1 }).limit(6); // Sort in ascending order
     } else if (sort === "desc") {
       result = await products.find(query).sort({ upVotes: -1 }).limit(6); // Sort in descending order
-    } else {
-      result = await products.find(query); // No sorting
+    }
+     else {
+      result = await products
+        .find(query)
+        .skip(page * size)
+        .limit(size);; // No sorting
     }
     res.send(result);
   } catch (error) {
